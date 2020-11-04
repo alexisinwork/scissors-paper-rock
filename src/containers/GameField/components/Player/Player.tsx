@@ -9,6 +9,7 @@ export type PlayerProps = {
   testId: string
   name: string
   option?: RuleOption
+  isGameOver: boolean,
   onOptionSelected: (rule: RuleOption) => void
   wins: number
 }
@@ -31,6 +32,7 @@ const Player = ({
   testId,
   name,
   option,
+  isGameOver,
   onOptionSelected,
   wins
 }: PlayerProps): React.ReactElement => {
@@ -44,8 +46,10 @@ const Player = ({
         </div>
 
         <select
+          data-testid={`${testId}-select`}
           className="select"
           defaultValue={''}
+          disabled={isGameOver}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => 
             onOptionSelected(e.target.value.toLowerCase() as RuleOption)}
           >

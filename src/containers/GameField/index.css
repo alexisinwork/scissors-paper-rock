@@ -1,6 +1,7 @@
 .game-field {
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
   margin: 0 auto;
 }
@@ -9,4 +10,30 @@
   display: flex;
   flex-direction: row;
   width: 100%;
+}
+
+.select {
+  padding: 4px 16px;
+  border: 0;
+  background-color: rgba(0,0,0,0.2)
+}
+
+.select:hover {
+  cursor: pointer;
+}
+
+.btn {
+  height: 48px;
+  line-height: 32px;
+  padding: 8px 16px;
+  border: 1px solid rgb(131, 131, 207);
+  border-radius: 8px;
+  background-color: rgb(75, 75, 180);
+  box-shadow: none;
+  color: white;
+  font-size: 20px;
+}
+
+.btn:hover {
+  cursor: pointer;
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import Player, { PlayerProps } from './Player'
 import { SCISSORS, ROCK, PAPER } from '../../rulesMap'
 import toCapitalize from '../../../../shared/utils/toCapitalize'
@@ -30,11 +30,13 @@ const setup = ({ testId, name, option, wins }: PlayerProps) => {
     />
   )
 
+  const selectEl = wrapper.getByTestId(`${testId}-select`)
   const optionEls = wrapper.getAllByTestId(`${testId}-option`)
   const nameEl = wrapper.getByTestId(`${testId}-name`)
   const winsEl = wrapper.getByTestId(`${testId}-wins`)
 
   return {
+    selectEl,
     optionEls,
     nameEl,
     winsEl,
@@ -44,32 +46,6 @@ const setup = ({ testId, name, option, wins }: PlayerProps) => {
 }
 
 describe('<Player> has', () => {
-  describe('image that', () => {
-    it('renders by default', () => {
-      setup(defaultProps)
-      const imageEl = screen.getByAltText('default')
-      expect(imageEl).toBeInTheDocument()
-    })
-
-    it('renders scissors image when option is scissors', () => {
-      setup({ ...defaultProps, option: SCISSORS })
-      const imageEl = screen.getByAltText(SCISSORS)
-      expect(imageEl).toBeInTheDocument()
-    })
-
-    it('renders rock image when option is rock', () => {
-      setup({ ...defaultProps, option: ROCK })
-      const imageEl = screen.getByAltText(ROCK)
-      expect(imageEl).toBeInTheDocument()
-    })
-
-    it('renders paper image when option is paper', () => {
-      setup({ ...defaultProps, option: PAPER })
-      const imageEl = screen.getByAltText(PAPER)
-      expect(imageEl).toBeInTheDocument()
-    })
-  })
-
   describe('options that are', () => {
     it('renders', () => {
       const { optionEls } = setup(defaultProps)
@@ -92,10 +68,9 @@ describe('<Player> has', () => {
     })
 
     it('changes on select with correct value', () => {
-      const { optionEls, onOptionSelected } = setup(defaultProps)
-      fireEvent.click(optionEls[2])
+      const { selectEl, onOptionSelected } = setup(defaultProps)
+      fireEvent.change(selectEl, { target: { value: SCISSORS }})
       expect(onOptionSelected).toHaveBeenCalled()
-      expect(onOptionSelected).toHaveBeenCalledWith(SCISSORS)
     })
   })
 

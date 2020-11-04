@@ -7,7 +7,7 @@ import GameField from './containers/GameField'
 const App = (): React.ReactElement => {
   return (
     <div className="App">
-      <header className="App-header">Rock, Paper, Scissors</header>
+      <h1 className="App-header">Rock, Paper, Scissors</h1>
 
       <GameField />
     </div>

@@ -1,0 +1,12 @@
+.game-field {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.players {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}

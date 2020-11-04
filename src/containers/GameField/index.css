@@ -12,6 +12,13 @@
   width: 100%;
 }
 
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
 .select {
   padding: 4px 16px;
   border: 0;
@@ -32,6 +39,14 @@
   box-shadow: none;
   color: white;
   font-size: 20px;
+}
+
+.btn:last-child {
+  margin-left: 25px;
+}
+
+.btn:disabled {
+  background-color: rgba(0,0,0,0.2)
 }
 
 .btn:hover {

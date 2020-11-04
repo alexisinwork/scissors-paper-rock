@@ -8,7 +8,7 @@ import setPlayerWin from '../../shared/utils/setPlayerWin'
 import './index.css'
 
 const localWin1 = Number(window.localStorage.getItem('1'))
-const localWin2 = Number(window.localStorage.getItem('1'))
+const localWin2 = Number(window.localStorage.getItem('2'))
 
 type StateProps = {
   player1: {
@@ -59,11 +59,11 @@ const GameField = (): React.ReactElement => {
   const winsPlayer1 = player1.wins
   const optionPlayer2 = player2.option
   const winsPlayer2 = player2.wins
-  console.log(player1, player2)
+
   const [isGameOver, setIsGameOver] = useState(false)
   const [result, setResult] = useState('')
 
-  const onPlayerChose = (rule: RuleOption, player: number) => {
+  const onPlayerChose = useCallback((rule: RuleOption, player: number) => {
     // Get index of RulesOptions array from range(1, rulesMapKeysLength)
     const rulesLen = Object.keys(rulesMap).length
     const botDecision = RuleOptions[getRandomNumber(1, rulesLen)-1]
@@ -75,13 +75,13 @@ const GameField = (): React.ReactElement => {
         player2: { ...player2, option: player === 2 ? rule : botDecision }
       }
     })
-  }
+  }, [dispatch, player1, player2])
 
-  const botPlay = () => {
+  const botPlay =  useCallback((): void => {
     const rulesLen = Object.keys(rulesMap).length
     const botDecision = RuleOptions[getRandomNumber(1, rulesLen)-1]
     onPlayerChose(botDecision, 1)
-  }
+  }, [onPlayerChose])
 
   const startOver = () => {
     dispatch({
@@ -108,7 +108,7 @@ const GameField = (): React.ReactElement => {
           player2
         }
       })
-      console.log('triggered')
+
       setPlayerWin(result, winsPlayer1 + 1)
     }
 
@@ -120,7 +120,7 @@ const GameField = (): React.ReactElement => {
           player2: { ...player2, wins: player2.wins + 1 },
         }
       })
-      console.log('triggered 2')
+
       setPlayerWin(result, winsPlayer2 + 1)
     }
 
@@ -134,7 +134,7 @@ const GameField = (): React.ReactElement => {
     if (optionPlayer1 && optionPlayer2 && !isGameOver) {
       setResult(getResult())
     }
-  }, [optionPlayer1, optionPlayer2, isGameOver, getResult])
+  }, [optionPlayer1, optionPlayer2, isGameOver, botPlay,  getResult])
 
   return (
     <div className="game-field">
@@ -164,10 +164,10 @@ const GameField = (): React.ReactElement => {
 
       <div className="controls">
         <button className="btn" onClick={() => startOver()}>
-          Start again
+          Start
         </button>
 
-        <button className="btn" onClick={() => botPlay()}>
+        <button className="btn" onClick={() => botPlay()} disabled={isGameOver}>
           Computer VS Computer
         </button>
       </div>
